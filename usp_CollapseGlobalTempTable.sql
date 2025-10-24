@@ -49,8 +49,10 @@ BEGIN
     WHERE c.object_id = @ObjectID;
 
     -- Build the dynamic LAG comparison logic, partitioned by the "Other Columns"
+    -- Handle NULL comparisons properly using ISNULL or IS NOT DISTINCT FROM pattern
     SELECT @LagComparisons = STRING_AGG(
-        'LAG(' + QUOTENAME(c.name) + ', 1) OVER (PARTITION BY ' + @PartitionByClause + ' ORDER BY ' + QUOTENAME(@DateColumn) + ') = ' + QUOTENAME(c.name),
+        '(LAG(' + QUOTENAME(c.name) + ', 1) OVER (PARTITION BY ' + @PartitionByClause + ' ORDER BY ' + QUOTENAME(@DateColumn) + ') = ' + QUOTENAME(c.name) + 
+        ' OR (LAG(' + QUOTENAME(c.name) + ', 1) OVER (PARTITION BY ' + @PartitionByClause + ' ORDER BY ' + QUOTENAME(@DateColumn) + ') IS NULL AND ' + QUOTENAME(c.name) + ' IS NULL))',
         ' AND '
     )
     FROM tempdb.sys.columns c
