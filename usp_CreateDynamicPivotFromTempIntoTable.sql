@@ -44,11 +44,11 @@ BEGIN
     DECLARE @finalSql NVARCHAR(MAX);
 
     -- Build the CONCAT expression for creating the new column names from the category columns
-    SELECT @pivotColumnConstructor = CONCAT('CONCAT(', STRING_AGG(CONCAT('s.', QUOTENAME(value)), ", '_', "), ", '_', m.MeasureName)")
+    SELECT @pivotColumnConstructor = CONCAT('CONCAT(', STRING_AGG(CONCAT('s.', QUOTENAME(TRIM(value))), ", '_', "), ", '_', m.MeasureName)")
     FROM STRING_SPLIT(@CategoryColumns, ',');
 
     -- Build the CROSS APPLY clause to unpivot the measure columns
-    SELECT @unpivotClause = STRING_AGG(CONCAT("('", value, "', s.", QUOTENAME(value), ")"), ', ')
+    SELECT @unpivotClause = STRING_AGG(CONCAT("('", TRIM(value), "', s.", QUOTENAME(TRIM(value)), ")"), ', ')
     FROM STRING_SPLIT(@MeasureColumns, ',');
 
     -- ******************** STEP 2: GENERATE THE PIVOT COLUMN LIST ********************
