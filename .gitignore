@@ -1,0 +1,17 @@
+# SQL Server temporary files
+*.bak
+*.tmp
+*.log
+
+# Test output files
+test_results/
+output/
+
+# IDE files
+.vs/
+*.suo
+*.user
+
+# OS files
+.DS_Store
+Thumbs.db
