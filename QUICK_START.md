@@ -9,12 +9,12 @@ Run these SQL files in your SQL Server database to create the procedures:
 ```sql
 -- Run these files in order:
 -- 1. Create the pivot procedure (choose one)
-@usp_CreateDynamicPivotFromTemp.sql        -- Enhanced version with optional output
+-- usp_CreateDynamicPivotFromTemp.sql        -- Enhanced version with optional output
 -- OR
-@usp_CreateDynamicPivotFromTempIntoTable.sql  -- Alternative that always outputs to table
+-- usp_CreateDynamicPivotFromTempIntoTable.sql  -- Alternative that always outputs to table
 
 -- 2. Create the collapse procedure
-@usp_CollapseGlobalTempTable.sql
+-- usp_CollapseGlobalTempTable.sql
 ```
 
 ### Step 2: Prepare Your Raw Data

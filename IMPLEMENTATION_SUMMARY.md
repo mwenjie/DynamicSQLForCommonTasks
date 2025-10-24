@@ -25,7 +25,7 @@ The task was to enhance SQL stored procedures to:
 
 #### 3. **usp_CollapseGlobalTempTable** (Fixed)
 - **Original Issue**: NULL comparisons in LAG logic didn't work correctly
-- **Fix**: Added proper NULL handling using `(value = value OR (value IS NULL AND prev_value IS NULL))` pattern
+- **Fix**: Added proper NULL handling using `(LAG(col) = col OR (LAG(col) IS NULL AND col IS NULL))` pattern
 - **Key Improvements**:
   - Correctly identifies islands even when values contain NULLs
   - Properly partitions by contract or other grouping columns
@@ -41,12 +41,11 @@ The task was to enhance SQL stored procedures to:
 2. **test_workflow_complete.sql** - Comprehensive test with explicit data
    - Full data entry showing all rate combinations
    - Good for validation and debugging
+   - Similar to demo_end_to_end.sql but with manual data entry
 
 3. **test_simple.sql** - Minimal test case
    - Quick validation of basic functionality
    - Easy to understand and modify
-
-4. **test_complete_workflow.sql** - Initial test script (can be removed if redundant)
 
 ### Documentation
 
