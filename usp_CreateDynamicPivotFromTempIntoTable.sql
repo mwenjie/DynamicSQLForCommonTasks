@@ -47,8 +47,8 @@ BEGIN
     SELECT @pivotColumnConstructor = CONCAT('CONCAT(', STRING_AGG(CONCAT('s.', QUOTENAME(TRIM(value))), ", '_', "), ", '_', m.MeasureName)")
     FROM STRING_SPLIT(@CategoryColumns, ',');
 
-    -- Build the CROSS APPLY clause to unpivot the measure columns
-    SELECT @unpivotClause = STRING_AGG(CONCAT("('", TRIM(value), "', s.", QUOTENAME(TRIM(value)), ")"), ', ')
+    -- Build the CROSS APPLY clause to unpivot the measure columns (Azure SQL compatible with VALUES)
+    SELECT @unpivotClause = CONCAT('VALUES ', STRING_AGG(CONCAT("('", TRIM(value), "', s.", QUOTENAME(TRIM(value)), ")"), ', '))
     FROM STRING_SPLIT(@MeasureColumns, ',');
 
     -- ******************** STEP 2: GENERATE THE PIVOT COLUMN LIST ********************
