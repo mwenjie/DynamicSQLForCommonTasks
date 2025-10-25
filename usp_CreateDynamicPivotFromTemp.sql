@@ -39,9 +39,9 @@ BEGIN
     -- ******************** STEP 2: GENERATE THE PIVOT COLUMN LIST ********************
     -- This query runs against the provided global temp table to discover all unique column combinations.
     DECLARE @columnListSql NVARCHAR(MAX) = N'
-        SELECT @result = STRING_AGG(DISTINCT QUOTENAME(PivotColumn), '','')
+        SELECT @result = STRING_AGG(QUOTENAME(PivotColumn), '','')
         FROM (
-            SELECT ' + @pivotColumnConstructor + N' AS PivotColumn
+            SELECT DISTINCT ' + @pivotColumnConstructor + N' AS PivotColumn
             FROM ' + @GlobalTempTableName + N' s
             CROSS APPLY (' + @unpivotClause + N') AS m(MeasureName, MeasureValue)
         ) AS DistinctColumns;';
