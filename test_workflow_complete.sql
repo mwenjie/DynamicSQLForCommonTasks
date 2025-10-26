@@ -265,11 +265,10 @@ PRINT '=============================================';
 
 -- Get the list of rate columns (excluding ContractId and DateKey)
 DECLARE @RateColumns NVARCHAR(MAX);
-SELECT @RateColumns = STRING_AGG(COLUMN_NAME, ', ')
+SELECT @RateColumns = STRING_AGG(COLUMN_NAME, ', ') WITHIN GROUP (ORDER BY ORDINAL_POSITION)
 FROM tempdb.INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME LIKE '%' + CAST(OBJECT_ID('tempdb..##PivotedData') AS VARCHAR(100)) + '%'
-  AND COLUMN_NAME NOT IN ('ContractId', 'DateKey')
-ORDER BY ORDINAL_POSITION;
+  AND COLUMN_NAME NOT IN ('ContractId', 'DateKey');
 
 PRINT 'Rate columns to track for changes: ' + @RateColumns;
 PRINT '';
