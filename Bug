@@ -1,0 +1,2 @@
+Msg 8127, Level 16, State 1, Line 8
+Column "tempdb.INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION" is invalid in the ORDER BY clause because it is not contained in either an aggregate function or the GROUP BY clause.
